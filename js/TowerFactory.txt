@@ -1,0 +1,10 @@
+var TowerTypes = [
+	{
+	
+	}
+];
+var TowerFactory = {};
+
+TowerFactory.createTower = function(type){
+	
+};

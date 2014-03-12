@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script src="js/core/AnimatedSprite.js"></script>
+<script src="js/core/StaticSprite.js"></script>
+<script src="js/core/ImgLoader.js"></script>
+<script src="js/core/MenuItem.js"></script>
+<script src="js/core/Screen.js"></script>
+<script src="js/map.js"></script>
+<script src="js/mapdata.js"></script>
+<script src="js/Game.js"></script>
+<script src="js/TowerFactory.js"></script>
+<script src="js/Enemy.js"></script>
+<script src="js/Tower.js"></script>
+<script src="js/Bullet.js"></script>
+<script src="js/Button.js"></script>
+<script src="js/ControlPanel.js"></script>
+<script>
+
+var TITLE_TEXT = "Tower Defender v0.0.7";
+var FPS =  60;
+var PANEL_WIDTH = 250;
+
+var _images;
+var _sprites;
+function setup(){
+
+	var canvas = document.getElementById("canvas");
+	canvas.width = WIDTH + PANEL_WIDTH;
+	canvas.height = HEIGHT;
+	var context = canvas.getContext("2d");
+	context.textAlign = "center";
+	
+	// load images
+	var sources = {
+		enemies: "img/enemies.png",
+		stone_texture: "img/stone_texture.jpg",
+		towers: "img/tanks.png",
+	};
+	var loader = new ImgLoader(sources,
+		function(image,percent) {	// on progressing			
+			context.clearRect(0,0,canvas.width,canvas.height);
+			context.fillText("Loading: "+percent+"%",canvas.width/2,canvas.height/2);						
+		},
+		function(images){			// completed					
+
+			_images = images;
+			
+			_sprites = new StaticSprite({
+				image: _images.towers,
+				frameWidth: 58,
+				frameHeight: 50
+			});
+			
+			for(var i = 0; i < 5; i++)
+			{
+				_sprites.addSprite({
+					name: "tower" + i,
+					frameIndex: i,
+					marginTop: 0,
+					marginBottom: 0,
+					marginLeft: 6,
+					marginRight: 14				
+				});
+			}
+			// create the help screen
+			var helpScreen,welcomeScreen,mapScreen,difficultScreen;
+			helpScreen = new Screen(canvas);
+			
+			var cx = canvas.width/2;
+			helpScreen.addItem(new MenuItem({
+					left: cx-100,
+					top: canvas.height-60,
+					width: 200,
+					height: 40,
+					text: "Back",
+					onclick: function(){
+						// back to welcome screen
+						helpScreen.stop();
+						welcomeScreen.start();
+					}
+				}));
+
+			// create difficulty choosing screen
+			difficultScreen = new Screen(canvas);
+			difficultScreen.addItem(new MenuItem({
+                left: cx-250,
+                top: 125,
+                width: 150,
+                height: 200,
+                text: "Easy",
+                onclick: function(){
+                    difficultScreen.stop();
+                    new Game(canvas,context).init();
+                }
+		    }));
+			
+			difficultScreen.addItem(new MenuItem({
+                left: cx-75,
+                top: 125,
+                width: 150,
+                height: 200,
+                text: "Medium",
+                onclick: function(){
+                    difficultScreen.stop();
+                    new Game(canvas,context).init();
+                }
+            }));
+			
+			difficultScreen.addItem(new MenuItem({
+                left: cx+100,
+                top: 125,
+                width: 150,
+                height: 200,
+                text: "Hard",
+                onclick: function(){
+                    difficultScreen.stop();
+                    new Game(canvas,context).init();
+                }
+            }));
+			
+			difficultScreen.addItem(new MenuItem({
+                left: cx-300,
+                top: 20,
+                width: 100,
+                height: 40,
+                text: "Back",
+                onclick: function(){
+                    difficultScreen.stop();
+                    mapScreen.start();
+                }
+            }));
+			
+			// create the welcome screen
+			welcomeScreen = new Screen(canvas,true);
+			welcomeScreen.beforeDraw = function(context){
+				context.font = "24px Arial";
+				context.fillStyle = "white";
+				context.fillText(TITLE_TEXT,canvas.width/2,40);
+			};
+			
+			//create the map choosing screen
+		    mapScreen = new Screen(canvas);
+			mapScreen.addItem(new MenuItem({
+					left: cx-180,
+					top: 125,
+					width: 360,
+					height: 200,
+					text: "Map 1",
+					onclick: function(){
+						mapScreen.stop();
+						difficultScreen.start();
+					}
+			}));
+			
+			mapScreen.addItem(new MenuItem({
+                left: cx-290,
+                top: 175,
+                width: 80,
+                height: 100,
+                text: "<",
+                onclick: function(){
+                    mapScreen.items[0].draw = function(context){
+                    	//context.drawImage(,140,125,360,200);
+                    };
+                }
+		    }));
+			
+			mapScreen.addItem(new MenuItem({
+                left: cx+210,
+                top: 175,
+                width: 80,
+                height: 100,
+                text: ">",
+                onclick: function(){
+                	
+                }
+            }));
+			
+			mapScreen.addItem(new MenuItem({
+				left: cx-300,
+                top: 20,
+                width: 100,
+                height: 40,
+                text: "Back",
+                onclick: function(){
+                    mapScreen.stop();
+                    welcomeScreen.start();
+                }
+            }));
+			
+			var titles = ["Play","Help","Score"];
+
+			welcomeScreen.addItem(new MenuItem({
+                left: cx-75,
+                top: 150,
+                width: 150,
+                height: 70,
+                text: titles[0]
+            }));
+			
+			welcomeScreen.addItem(new MenuItem({
+                left: cx-225,
+                top: 250,
+                width: 150,
+                height: 70,
+                text: titles[1]
+            }));
+			
+			welcomeScreen.addItem(new MenuItem({
+                left: cx+75,
+                top: 250,
+                width: 150,
+                height: 70,
+                text: titles[2]
+            }));
+			
+			welcomeScreen.items[0].onclick = function(){
+				welcomeScreen.stop();
+				// start game
+				//new Game(canvas,context).init();
+				mapScreen.start();
+			};
+			welcomeScreen.items[1].onclick = function(){
+				welcomeScreen.stop();
+				helpScreen.start();					
+			};
+			welcomeScreen.start();
+		});
+}
+var output;
+window.onload = function(){
+	output = document.getElementById("output");
+	setup();	
+}
+
+window.log = function(msg){
+output.innerHTML = msg;
+};
+</script>
+</head>
+<body>
+
+<canvas id="canvas" 
+	tabindex="1" style="border: 1px solid" ></canvas>
+	<div id="output"></div>
+</body>
+</html>

@@ -64,7 +64,7 @@ MapFactory.getData = function(level){
 		return data;
 	}
 	return calcLength(level);
-}
+};
 
 
 

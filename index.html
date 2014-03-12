@@ -20,7 +20,7 @@
 
 var TITLE_TEXT = "Tower Defender v0.0.7";
 var FPS =  60;
-var PANEL_WIDTH = 250;
+var PANEL_WIDTH = 200;
 
 var _images;
 var _sprites;
@@ -37,6 +37,11 @@ function setup(){
 		enemies: "img/enemies.png",
 		stone_texture: "img/stone_texture.jpg",
 		towers: "img/tanks.png",
+		play: "img/play.png",
+		button: "img/button.png",
+		back: "img/back.png",
+		next: "img/next.png",
+		prev: "img/prev.png"
 	};
 	var loader = new ImgLoader(sources,
 		function(image,percent) {	// on progressing			
@@ -84,15 +89,27 @@ function setup(){
 
 			// create difficulty choosing screen
 			difficultScreen = new Screen(canvas);
+			difficultScreen.beforeDraw = function(context){
+                context.font = "30px Arial";
+                context.fillStyle = "white";
+                context.fillText("Difficulty Selection",canvas.width/2,40);
+            };
+            
 			difficultScreen.addItem(new MenuItem({
                 left: cx-250,
                 top: 125,
                 width: 150,
                 height: 200,
-                text: "Easy",
                 onclick: function(){
                     difficultScreen.stop();
                     new Game(canvas,context).init();
+                },
+                draw: function(context){
+                    context.drawImage(_images.button,cx-250,70,150,350);
+                    context.font = "40px Arial";
+                    context.fillStyle = "white";
+                    context.fillText("Easy",cx-175,250);
+                    context.font = "15px Arial";
                 }
 		    }));
 			
@@ -105,6 +122,13 @@ function setup(){
                 onclick: function(){
                     difficultScreen.stop();
                     new Game(canvas,context).init();
+                },
+                draw: function(context){
+                    context.drawImage(_images.button,cx-75 ,70,150,350);
+                    context.font = "40px Arial";
+                    context.fillStyle = "white";
+                    context.fillText("Medium",cx,250);
+                    context.font = "15px Arial";
                 }
             }));
 			
@@ -117,18 +141,27 @@ function setup(){
                 onclick: function(){
                     difficultScreen.stop();
                     new Game(canvas,context).init();
+                },
+                draw: function(context){
+                    context.drawImage(_images.button,cx+100,70,150,350);
+                    context.font = "40px Arial";
+                    context.fillStyle = "white";
+                    context.fillText("Hard",cx+175,250);
+                    context.font = "15px Arial";
                 }
             }));
 			
 			difficultScreen.addItem(new MenuItem({
-                left: cx-300,
-                top: 20,
-                width: 100,
-                height: 40,
-                text: "Back",
+                left: cx-310,
+                top: 10,
+                width: 60,
+                height: 60,
                 onclick: function(){
                     difficultScreen.stop();
                     mapScreen.start();
+                },
+                draw: function(context){
+                    context.drawImage(_images.back,cx-310,10,60,60);
                 }
             }));
 			
@@ -142,11 +175,17 @@ function setup(){
 			
 			//create the map choosing screen
 		    mapScreen = new Screen(canvas);
+		    mapScreen.beforeDraw = function(context){
+                context.font = "30px Arial";
+                context.fillStyle = "white";
+                context.fillText("Map Selection",canvas.width/2,40);
+            };
+            
 			mapScreen.addItem(new MenuItem({
-					left: cx-180,
-					top: 125,
-					width: 360,
-					height: 200,
+					left: cx-150,
+					top: 100,
+					width: 300,
+					height: 250,
 					text: "Map 1",
 					onclick: function(){
 						mapScreen.stop();
@@ -157,63 +196,77 @@ function setup(){
 			mapScreen.addItem(new MenuItem({
                 left: cx-290,
                 top: 175,
-                width: 80,
+                width: 90,
                 height: 100,
-                text: "<",
                 onclick: function(){
                     mapScreen.items[0].draw = function(context){
                     	//context.drawImage(,140,125,360,200);
                     };
+                },
+                draw: function(context){
+                    context.drawImage(_images.prev,cx-290,175,90,90);
                 }
 		    }));
 			
 			mapScreen.addItem(new MenuItem({
-                left: cx+210,
+                left: cx+190,
                 top: 175,
-                width: 80,
+                width: 90,
                 height: 100,
-                text: ">",
                 onclick: function(){
                 	
+                },
+                draw: function(context){
+                    context.drawImage(_images.next,cx+195,175,90,90);
                 }
             }));
 			
 			mapScreen.addItem(new MenuItem({
-				left: cx-300,
-                top: 20,
-                width: 100,
-                height: 40,
-                text: "Back",
+				left: cx-310,
+                top: 10,
+                width: 60,
+                height: 60,
                 onclick: function(){
                     mapScreen.stop();
                     welcomeScreen.start();
+                },
+                draw: function(context){
+                    context.drawImage(_images.back,cx-310,10,60,60);
                 }
             }));
 			
 			var titles = ["Play","Help","Score"];
 
 			welcomeScreen.addItem(new MenuItem({
-                left: cx-75,
-                top: 150,
-                width: 150,
-                height: 70,
-                text: titles[0]
+			    left: cx-65,
+                top: 125,
+                width: 130,
+                height:130,
+                draw: function(context){
+                    context.drawImage(_images.play,cx-65,125,130,130);
+                }
             }));
 			
 			welcomeScreen.addItem(new MenuItem({
-                left: cx-225,
+                left: cx-245,
                 top: 250,
                 width: 150,
                 height: 70,
-                text: titles[1]
+                draw: function(context){
+                    context.drawImage(_images.button,cx-245,230,150,130);
+                    context.fillText(titles[1],cx-170,300);
+                }
             }));
 			
 			welcomeScreen.addItem(new MenuItem({
-                left: cx+75,
+                left: cx+95,
                 top: 250,
                 width: 150,
                 height: 70,
-                text: titles[2]
+                draw: function(context){
+                    context.drawImage(_images.button,cx+95,230,150,130);
+                    context.fillText(titles[2],cx+170,300);
+                }
             }));
 			
 			welcomeScreen.items[0].onclick = function(){
@@ -233,7 +286,7 @@ var output;
 window.onload = function(){
 	output = document.getElementById("output");
 	setup();	
-}
+};
 
 window.log = function(msg){
 output.innerHTML = msg;

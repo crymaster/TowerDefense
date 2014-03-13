@@ -18,20 +18,20 @@ var TowerTypes = [
 		effect: Effects.NONE,
 		price : 200,	
 		color : "Wheat",
-		damage : 100,
+		damage : 60,
 		shootingRange : 100,
-		fireDelay : 300,
+		fireDelay : 250,
 		rotationSpeed : 4,
 		upgradePrice : 10
 	},{
 		effect: Effects.POISION,
 		price : 200,	
 		color : "Green",
-		damage : 50,
+		damage : 70,
 		shootingRange : 80,
 		fireDelay : 300,
 		rotationSpeed : 4,
-		upgradePrice : 10
+		upgradePrice : 12
 	}
 	,{
 		effect: Effects.FREEZE,
@@ -41,14 +41,14 @@ var TowerTypes = [
 		shootingRange : 80,
 		fireDelay : 400,
 		rotationSpeed : 3,
-		upgradePrice : 10
+		upgradePrice : 15
 	},{
 		effect: Effects.NONE,
 		price : 400,	
 		color : "Indigo",
 		damage : 250,
 		shootingRange : 200,
-		fireDelay : 300,
+		fireDelay : 500,
 		rotationSpeed : 2,
 		upgradePrice : 30
 	}

@@ -1,7 +1,7 @@
 function Map(){		
 
-	this.level = 0;	
-	
+	this.level = _selectedLevel;
+	this.difficulty = _selectedDifficulty;
 	
 	// land buffer
 	this.land_buffer = document.createElement("canvas");
@@ -45,9 +45,9 @@ Map.prototype.showMessage = function(message, onMessageClosed){
 Map.prototype.nextWave = function(){
 	if(this.wavesCounter < this.levelData.numWaves)
 	{
-		this.waveHP = this.levelData.HP + this.wavesCounter * 100 + this.level * 200;
-		this.waveSpeed = 1 + (this.wavesCounter < 1 ? 0 : Math.floor(Math.random() * 6) / 10);
 		this.wavesType = Math.floor(Math.random()*4);
+		this.waveHP = Math.ceil((this.levelData.HP + this.wavesCounter * 85 + this.level * 10 + this.difficulty*75)*(8 - this.wavesType)/7);
+		this.waveSpeed = 1 + this.wavesCounter*0.05 + this.difficulty/4 + this.wavesType/5 - 0.5;		
 		this.enemiesCounter = 0;
 		this.wavesCounter ++;
 	}
@@ -99,15 +99,15 @@ Map.prototype.onmousedown = function(x, y){
 Map.prototype.reset = function(ignoreEvent){	
 	
 	if(this.level == MAPS.length)
-		this.level = 0;
+		this.level = _selectedLevel;
 			
 	this.selectedTower = null;
 	this.waveHP = NaN;
 	this.waveSpeed = NaN;
-	this.playerLife = 5;
+	this.playerLife = 15 - _selectedDifficulty * 3;
 	
 	this.levelData = MapFactory.getData(this.level);// MAPS[this.level];	
-	this.money = 600 + this.level * 200;
+	this.money = 800 - _selectedDifficulty * 200;
 	this.enemies = [];
 	this.towers = [];
 	
@@ -247,8 +247,8 @@ Map.prototype.update = function(){
 					this.onFinishedLevel();	
 				this.level ++;
 				
-				if(this.level == MAPS.length)
-				{				
+				/* if(this.level == MAPS.length)
+				{	 */			
 					var a = confirm("You have finished all levels!\n Do you want to try again?");	
 					if(a)
 					{
@@ -257,11 +257,11 @@ Map.prototype.update = function(){
 					}else
 						if(this.onFinishedGame)
 							this.onFinishedGame();
-				}
+				/* }
 				else
 				{
 					this.showMessage("Level " + this.level + " Completed!",this.reset);											
-				}
+				} */
 				return;
 			}else
 				if(this.onFinishedWave)
@@ -279,7 +279,7 @@ Map.prototype.update = function(){
 		else if(this.enemies[i].isDisposed)
 		{
 			if(this.enemies[i].isDead)
-				this.money += (this.level + 1) * 10;
+				this.money += this.wavesCounter*2 + this.wavesType*3 + (2 - this.difficulty) * 5;
 			var e = this.enemies.splice(i,1);
 			
 			delete e;

@@ -136,7 +136,7 @@ ControlPanel.prototype.draw = function(context) {
 	context.fillText("Money: " + this.map.money + "$", this.left + 10, this.top + 260);
 	context.fillText("Wave: " + this.map.wavesCounter, this.left + 10, this.top + 280);
 	context.fillText("HP: " + this.map.waveHP, this.left + 10, this.top + 300);
-	context.fillText("Speed: " + this.map.waveSpeed * 10, this.left + 90, this.top + 300);
+	context.fillText("Speed: " + Math.ceil(this.map.waveSpeed * 10), this.left + 90, this.top + 300);
 	if(this.countDownSeconds > 0)
 	{
 		

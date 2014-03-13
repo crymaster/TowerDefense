@@ -10,8 +10,8 @@ var MAPS = [];
 MAPS.push
 	({		
 		numEnemies		: 10,
-		numWaves		: 5,
-		HP	 			: 500,
+		numWaves		: 20,
+		HP	 			: 425,
 		roadsX			: [
 							[50,50,50,50,HALF_WIDTH,HALF_WIDTH,300,300],
 							[200,200,300,300,50,50,HALF_WIDTH,HALF_WIDTH,300,300],
@@ -20,14 +20,14 @@ MAPS.push
 		roadsY			: [
 							[0,50,110,250,350,HALF_HEIGHT,250,HEIGHT],
 							[0,50,50,110,110,250,350,HALF_HEIGHT,250,HEIGHT],
-							[50,50,50,110,110,250,350,HALF_HEIGHT,250,HEIGHT]
+							[50,50,70,110,110,250,350,HALF_HEIGHT,250,HEIGHT]
 						]
 	});
 MAPS.push
 	({		
-		numEnemies		: 10,
-		numWaves		: 10,
-		HP	 			: 700,
+		numEnemies		: 11,
+		numWaves		: 25,
+		HP	 			: 475,
 		roadsX			: [
 							[50,50,50,150,150,350,350,50,50,200,HALF_WIDTH],
 							[150,150,150,150,HALF_WIDTH,300,300],
@@ -38,6 +38,21 @@ MAPS.push
 							[0,110,150,HALF_HEIGHT,HALF_HEIGHT,250,HEIGHT],							
 						]		
 	});
+MAPS.push
+	({		
+		numEnemies		: 10,
+		numWaves		: 25,
+		HP	 			: 475,
+		roadsX			: [
+							[0,150,180,225,250,350,350,50,100,200,HALF_WIDTH],
+							[75,75,180,150,150,200,200,250,300,WIDTH],
+							
+						],
+		roadsY			: [
+							[150,150,75,200,150,50,250,250,350,350,HEIGHT],
+							[0,75,75,150,250,280,280,350,350,HEIGHT],							
+						]		
+	});	
 var MapFactory = {};
 MapFactory.getData = function(level){
 // find the total length of road

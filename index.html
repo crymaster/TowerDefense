@@ -45,7 +45,8 @@ function setup(){
 		prev: "img/prev.png",
 		map1: "img/map1.png",
 		map2: "img/map2.png",
-		map3: "img/map3.png"
+		map3: "img/map3.png",
+		logo: "img/logo.png"
 	};
 	var loader = new ImgLoader(sources,
 		function(image,percent) {	// on progressing			
@@ -177,7 +178,7 @@ function setup(){
 			welcomeScreen.beforeDraw = function(context){
 				context.font = "24px Arial";
 				context.fillStyle = "white";
-				context.fillText(TITLE_TEXT,canvas.width/2,40);
+				context.drawImage(_images.logo,cx - 240, 30, 469,62);
 			};
 			
 			//create the map choosing screen
@@ -273,33 +274,33 @@ function setup(){
 
 			welcomeScreen.addItem(new MenuItem({
 			    left: cx-65,
-                top: 125,
+                top: 140,
                 width: 130,
                 height:130,
                 draw: function(context){
-                    context.drawImage(_images.play,cx-65,125,130,130);
+                    context.drawImage(_images.play,cx-65,140,130,130);
                 }
             }));
 			
 			welcomeScreen.addItem(new MenuItem({
                 left: cx-245,
-                top: 250,
+                top: 270,
                 width: 150,
                 height: 70,
                 draw: function(context){
-                    context.drawImage(_images.button,cx-245,230,150,130);
-                    context.fillText(titles[1],cx-170,300);
+                    context.drawImage(_images.button,cx-245,240,150,130);
+                    context.fillText(titles[1],cx-170,310);
                 }
             }));
 			
 			welcomeScreen.addItem(new MenuItem({
                 left: cx+95,
-                top: 250,
+                top: 270,
                 width: 150,
                 height: 70,
                 draw: function(context){
-                    context.drawImage(_images.button,cx+95,230,150,130);
-                    context.fillText(titles[2],cx+170,300);
+                    context.drawImage(_images.button,cx+95,240,150,130);
+                    context.fillText(titles[2],cx+170,310);
                 }
             }));
 			

@@ -1,4 +1,4 @@
-var WIDTH = 400;
+var WIDTH = 450; //400
 var HEIGHT = 400;
 
 var HALF_WIDTH = WIDTH / 2;

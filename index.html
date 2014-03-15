@@ -95,9 +95,9 @@ function setup(){
 			// create difficulty choosing screen
 			difficultScreen = new Screen(canvas);
 			difficultScreen.beforeDraw = function(context){
-                context.font = "30px Arial";
+                context.font = "40px Arial";
                 context.fillStyle = "white";
-                context.fillText("Difficulty Selection",canvas.width/2,40);
+                context.fillText("Difficulty Selection",canvas.width/2,50);
             };
             
 			difficultScreen.addItem(new MenuItem({
@@ -184,23 +184,23 @@ function setup(){
 			//create the map choosing screen
 		    mapScreen = new Screen(canvas);
 		    mapScreen.beforeDraw = function(context){
-                context.font = "30px Arial";
+                context.font = "40px Arial";
                 context.fillStyle = "white";
-                context.fillText("Map Selection",canvas.width/2,40);
+                context.fillText("Map Selection",canvas.width/2,50);
             };
             
 			mapScreen.addItem(new MenuItem({
-					left: cx-150,
+					left: cx-160,
 					top: 100,
-					width: 300,
-					height: 250,
+					width: 310,
+					height: 260,
 					text: "Map 1",
 					onclick: function(){
 						mapScreen.stop();
 						difficultScreen.start();
 					},
 			        draw: function(context){
-			        	context.drawImage(_images.map1,cx-150,100,300,250);
+			        	context.drawImage(_images.map1,cx-160,100,310,260);
 			        }
 			}));
 			
@@ -214,19 +214,19 @@ function setup(){
                     mapScreen.items[0].draw = function(context){
                     	switch(_selectedLevel){
                     	case 0:
-                    		context.drawImage(_images.map1,cx-150,100,300,250);
+                    		context.drawImage(_images.map1,cx-160,100,310,260);
                     	    break;
                     	case 1:
-                    		context.drawImage(_images.map2,cx-150,100,300,250);
+                    		context.drawImage(_images.map2,cx-160,100,310,260);
                     		break;
                     	case 2:
-                    		context.drawImage(_images.map3,cx-150,100,300,250);
+                    		context.drawImage(_images.map3,cx-160,100,310,260);
                     		break;
                     	}
                     };
                 },
                 draw: function(context){
-                    context.drawImage(_images.prev,cx-280,175,90,90);
+                    context.drawImage(_images.prev,cx-290,175,90,90);
                 }
 		    }));
 			
@@ -240,13 +240,13 @@ function setup(){
                 	mapScreen.items[0].draw = function(context){
                         switch(_selectedLevel){
                         case 0:
-                            context.drawImage(_images.map1,cx-150,100,300,250);
+                            context.drawImage(_images.map1,cx-160,100,310,260);
                             break;
                         case 1:
-                            context.drawImage(_images.map2,cx-150,100,300,250);
+                            context.drawImage(_images.map2,cx-160,100,310,260);
                             break;
                         case 2:
-                            context.drawImage(_images.map3,cx-150,100,300,250);
+                            context.drawImage(_images.map3,cx-160,100,310,260);
                             break;
                         }
                     };

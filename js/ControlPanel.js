@@ -1,8 +1,10 @@
 var COUNTDOWN_SECS = 20;
 var COLORS = ["Wheat", "Green", "Blue", "Indigo"];
-
+var TOWER_TYPES = ["BASIC","POISON","FREEZE"];
 function ControlPanel(left, top, width, height, map){	
-	this.map = map;
+	this.map = map;	
+	
+	_selectedCategory = 0;
 	
 	this.towerButtons = [];
 	this.actionButtons = [];
@@ -20,12 +22,24 @@ function ControlPanel(left, top, width, height, map){
 		self.countDownSeconds = COUNTDOWN_SECS;	
 	};
 	var self = this;
-	// add tower types button
-	for(var i = 0;i < 4; i++)
-	{		
-		this.addItem(50 * i + 5, 10, 40, 30, COLORS[i], COLORS[i]);		
-	}
 	
+	// add tower types button
+	for(var i = 0;i < 3; i++)
+	{		
+		this.addItem(65 * i + 5, 180, 55, 45, COLORS[i], COLORS[i]);		
+	}	
+	
+	// add tower category select button	
+	
+	this.addItem(5, 135, 40, 35, "gray", "Back", function(){		
+		_selectedCategory = (_selectedCategory+2) % 3;	
+		map.selectedTower = null;
+	});
+	
+	this.addItem(this.width - 45, 135, 40, 35, "gray", "Next", function(){		
+		_selectedCategory = (_selectedCategory+1) % 3;	
+		map.selectedTower = null;		
+	});
 	
 	// action buttons
 	this.map.onFinishedWave = function(){
@@ -41,9 +55,9 @@ function ControlPanel(left, top, width, height, map){
 		reset();		
 	};
 	
-	var width =  80;
+	var width =  85;
 	// upgrade button
-	this.addItem(10, 320, width, 20, "gray", "Upgrade", function(){
+	this.addItem(10, 360, width, 35, "gray", "Upgrade", function(){
 		if(map.selectedTower && map.selectedTower.isPlaced && map.money >= map.selectedTower.upgradePrice)
 		{
 			var price = map.selectedTower.upgradePrice
@@ -54,12 +68,12 @@ function ControlPanel(left, top, width, height, map){
 	});
 	
 	// sell button
-	this.addItem(100, 320, width, 20, "gray", "Sell", function(){
+	this.addItem(105, 360, width, 35, "gray", "Sell", function(){
 		alert("Not yet implemented!");
 	});
 	
 	// next wave button
-	this.addItem(10, 370, width, 20, "gray", "Next Wave", function(){
+	this.addItem(5, 5, width + 45, 35, "gray", "Next Wave", function(){
 		// alert("Not yet implemented!");
 		if(self.countDownSeconds > 0)
 		{
@@ -67,12 +81,25 @@ function ControlPanel(left, top, width, height, map){
 			self.map.nextWave();
 		}
 	});	
-	// Reset button
-	this.addItem(100, 370, width, 20, "gray", "Reset", function(){		
+	
+	// Option button
+	this.addItem(145, 5, width - 35, 35, "gray", "Option", function(){		
+		alert("Not yet implemented!");
+	});	
+	
+	// Restart button
+	this.addItem(105, 315, width, 35, "gray", "Restart", function(){
+		confirm("Do you really want to restart ?");
 		self.countDownSeconds = COUNTDOWN_SECS;	
 		reset();
 		self.map.reset(true);
 	});	
+	
+	// Undo button
+	this.addItem(10, 315, width, 35, "gray", "Undo", function(){
+		alert("Not yet implemented!");
+	});
+	
 	this.updateDelay = 1000;
 	this.lastUpdate = 0;
 }
@@ -92,13 +119,20 @@ ControlPanel.prototype.draw = function(context) {
 	context.fillStyle = "LightGray";
 	context.fillRect(this.left, this.top, this.width, this.height);
 	context.save();
-	context.font = "10px Arial";
-    for (var i = this.towerButtons.length-1; i>=0; i--) {
+	//context.font = "10px Arial";		
+    
+	context.fillStyle = "lightYellow";
+	context.fillRect(this.left + 50, this.top + 135, this.width - 100, 35);
+	context.fillStyle = "black";
+	context.font = "13px Arial";
+	context.fillText(TOWER_TYPES[_selectedCategory], this.left + 75, this.top + 155);
+	
+	for (var i = this.towerButtons.length-1; i>=0; i--) {
 		var button = this.towerButtons[i];
 		/*context.fillStyle = button.color;
 		context.fillRect(button.x, button.y, button.width, button.height);
 		*/
-		var sprite = _sprites.sprites["tower"+i];
+		var sprite = _sprites.sprites["tower"+_selectedCategory];
 		
 		sprite.draw(context, button.x, button.y, button.width, button.height);
 		if(button.isSelected)
@@ -115,6 +149,7 @@ ControlPanel.prototype.draw = function(context) {
 		context.fill();
 		*/
     }
+	
 	for (var i = this.actionButtons.length-1; i>=0; i--) {
 		var button = this.actionButtons[i];
 		context.fillStyle = button.color;
@@ -128,36 +163,37 @@ ControlPanel.prototype.draw = function(context) {
     }
 	context.restore();
 	
-	context.fillStyle = "lightyellow";
-	context.fillRect(this.left + 10, this.top + 200, this.width - 20, 110)
+	context.fillStyle = "lightYellow";
+	context.fillRect(this.left + 5, this.top + 50, this.width - 10, 75);
 	context.fillStyle = "black";
-	context.fillText("Map Level: " + (this.map.level + 1), this.left + 10, this.top + 220);
-	context.fillText("Life: " + this.map.playerLife, this.left + 10, this.top + 240);
-	context.fillText("Money: " + this.map.money + "$", this.left + 10, this.top + 260);
-	context.fillText("Wave: " + this.map.wavesCounter, this.left + 10, this.top + 280);
-	context.fillText("HP: " + this.map.waveHP, this.left + 10, this.top + 300);
-	context.fillText("Speed: " + Math.ceil(this.map.waveSpeed * 10), this.left + 90, this.top + 300);
+	//context.fillText("Map Level: " + (this.map.level + 1), this.left + 10, this.top + 220);
+	context.fillText("Life: " + this.map.playerLife, this.left + 10, this.top + 70);
+	context.fillText("Money: " + this.map.money + "$", this.left + 90, this.top + 70);	
+	context.fillText("HP: " + this.map.waveHP, this.left + 10, this.top + 90);
+	context.fillText("Speed: " + Math.ceil(this.map.waveSpeed * 10), this.left + 90, this.top + 90);
+	context.fillText("Wave: " + this.map.wavesCounter, this.left + 10, this.top + 110);
 	if(this.countDownSeconds > 0)
-	{
+	{		
+		context.fillText("Remains: " + this.countDownSeconds + "s", this.left + 90, this.top + 110);
+	}	
 		
-		context.fillText("Remaining: " + this.countDownSeconds + " seconds", this.left + 10, this.top + 360);
-	}
-	
 	if(this.map.selectedTower)
 		this.drawTowerInfo(context, this.map.selectedTower);
+		
 	
 }
 ControlPanel.prototype.drawTowerInfo = function(context, tower){		
 	
 	context.fillStyle = "black";	
 	var left = this.left + 10;
-	context.fillText("Effect: " + Effects.getName(tower.effect), left, this.top + 60);
-	context.fillText("Level: " + tower.level, left, this.top + 80);
-	context.fillText("Range: " + tower.shootingRange, left, this.top + 100);
-	context.fillText("Rate of Fire: " + Math.floor((1000 / tower.fireDelay) * 10), left, this.top + 120);
-	context.fillText("Damage: " + tower.damage, left, this.top + 140);
-	context.fillText("Rotation Speed: " + Math.floor(tower.rotationSpeed * 100), left, this.top + 160);
-	context.fillText("Price: " + tower.price , left, this.top + 180);
+	context.fillText("Name: " + tower.name, left, this.top + 245);
+	context.fillText("Effect: " + Effects.getName(tower.effect), left, this.top + 265);
+	context.fillText("Level: " + tower.level, left+105, this.top + 265);
+	context.fillText("Range: " + tower.shootingRange, left, this.top + 285);
+	context.fillText("Fire rate: " + Math.floor((1000 / tower.fireDelay) * 10), left + 105, this.top + 285);
+	context.fillText("Damage: " + tower.damage, left, this.top + 305);
+	//context.fillText("Rotation Speed: " + Math.floor(tower.rotationSpeed * 100), left, this.top + 160);
+	context.fillText("Price: " + tower.price + "$", left + 105, this.top + 305);
 }
 ControlPanel.prototype.onmousedown = function(x, y){
 	this.selectAt(x, y);			
@@ -184,7 +220,7 @@ ControlPanel.prototype.select = function(i){
 	this.towerButtons[i].isSelected = true;
 	
 	
-	this.map.selectedTower = TowerFactory.createTower(i);			
+	this.map.selectedTower = TowerFactory.createTower(i+_selectedCategory*3);			
 }
 // select by position
 ControlPanel.prototype.selectAt = function(x,y){

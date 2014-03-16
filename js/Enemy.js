@@ -85,7 +85,7 @@ function Enemy(type, HP, speed, roadX,roadY, remainingLength){
 		context.fillRect(this.left, this.top, UNIT_SIZE, UNIT_SIZE);
 		*/
 		
-		if(this.effect == Effects.POISION)
+		if(this.effect == Effects.POISON)
 			context.fillStyle = "green";
 		else if(this.effect == Effects.FREEZE)
 			context.fillStyle = "blue";
@@ -107,8 +107,8 @@ function Enemy(type, HP, speed, roadX,roadY, remainingLength){
 				lastEffect = tick;				
 				switch(this.effect)
 				{
-					case Effects.POISION:
-						this.hp -= 20; break;					
+					case Effects.POISON:
+						this.hp -= 25; break;					
 					default:
 						break;
 				}					

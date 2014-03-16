@@ -41,17 +41,17 @@ Map.prototype.showMessage = function(message, onMessageClosed){
 	this.message = message;
 	this.messageStartTime = (new Date()).getTime();	
 	this.onMessageClosed = onMessageClosed;
-};
+}
 Map.prototype.nextWave = function(){
 	if(this.wavesCounter < this.levelData.numWaves)
 	{
 		this.wavesType = Math.floor(Math.random()*4);
-		this.waveHP = Math.ceil((this.levelData.HP + this.wavesCounter * 85 + this.level * 10 + this.difficulty*75)*(8 - this.wavesType)/7);
+		this.waveHP = Math.ceil((this.levelData.HP + this.wavesCounter * 85 + this.level * 10 + 40)*(4+this.difficulty)/4*(8 - this.wavesType)/7);
 		this.waveSpeed = 1 + this.wavesCounter*0.05 + this.difficulty/4 + this.wavesType/5 - 0.5;		
 		this.enemiesCounter = 0;
 		this.wavesCounter ++;
 	}
-};
+}
 Map.prototype.containTower = function(x, y){
 	for(var i in this.towers)
 	{		
@@ -62,13 +62,13 @@ Map.prototype.containTower = function(x, y){
 		}
 	}
 	return false;
-};
+}
 Map.prototype.onmousemove = function(x, y){
 	// if selected tower wasn't placed on the map, change it's position
 	if(this.selectedTower && !this.selectedTower.isPlaced){
 		this.selectedTower.setPosition(x - HALF_UNIT_SIZE, y - HALF_UNIT_SIZE);		
 	}
-};
+}
 Map.prototype.onmousedown = function(x, y){
 		
 	if(this.containTower(x, y))
@@ -95,7 +95,7 @@ Map.prototype.onmousedown = function(x, y){
 		
 	}else
 		this.selectedTower = null;		
-};
+}
 Map.prototype.reset = function(ignoreEvent){	
 	
 	if(this.level == MAPS.length)
@@ -105,9 +105,9 @@ Map.prototype.reset = function(ignoreEvent){
 	this.waveHP = NaN;
 	this.waveSpeed = NaN;
 	this.playerLife = 15 - _selectedDifficulty * 3;
-	
+	_selectedCategory = 0;
 	this.levelData = MapFactory.getData(this.level);// MAPS[this.level];	
-	this.money = 800 - _selectedDifficulty * 200;
+	this.money = 600 - _selectedDifficulty * 50;
 	this.enemies = [];
 	this.towers = [];
 	
@@ -147,7 +147,7 @@ Map.prototype.reset = function(ignoreEvent){
 	
 	if(!ignoreEvent && this.onReset)
 		this.onReset();
-};
+}
 
 
 Map.prototype.draw = function(context){
@@ -191,7 +191,7 @@ Map.prototype.draw = function(context){
 		context.fillText(this.message, WIDTH/2,HEIGHT/2);
 		context.restore();
 	}
-};
+}
 Map.prototype.update = function(){
 	if(this.playerLife == 0)
 		return;
@@ -279,7 +279,7 @@ Map.prototype.update = function(){
 		else if(this.enemies[i].isDisposed)
 		{
 			if(this.enemies[i].isDead)
-				this.money += this.wavesCounter*2 + this.wavesType*3 + (2 - this.difficulty) * 5;
+				this.money += 7 + this.wavesCounter + this.wavesType + this.difficulty;
 			var e = this.enemies.splice(i,1);
 			
 			delete e;
@@ -294,11 +294,11 @@ Map.prototype.update = function(){
 	
 	for(var x in this.towers)
 		this.towers[x].update(this.enemies);	
-};
+}
 Map.prototype.contain = function(imageData, x, y){
 
 	if(!imageData)
 		return false;
 	var index = Math.floor((x+y*WIDTH)*4+3);
 	return imageData.data[index]!=0;
-};
+}

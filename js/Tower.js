@@ -34,12 +34,13 @@ function Tower(sprite,left,top){
 
 
 Tower.prototype.upgrade = function(){
-	if(this.level == 20)
+	if(this.level == 10)
 		return false;
 		
-	this.upgradePrice = Math.floor(this.upgradePrice * 1.3);
+	this.upgradePrice = Math.floor(this.upgradePrice * 1.5);
 	this.level++;
 	this.damage += Math.floor(this.damage/10);
+	this.fireDelay -= 3;
 	return true;
 };
 Tower.prototype.fire = function(){       

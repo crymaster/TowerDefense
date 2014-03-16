@@ -116,11 +116,12 @@ ControlPanel.prototype.update = function() {
 	}
 };
 ControlPanel.prototype.draw = function(context) {	
-	context.fillStyle = "LightGray";
-	context.fillRect(this.left, this.top, this.width, this.height);
-	context.save();
+	//context.fillStyle = "LightGray";
+	//context.fillRect(this.left, this.top, this.width, this.height);
+	//context.save();
 	//context.font = "10px Arial";		
-    
+    context.drawImage(_images.metalplate,this.left,this.top,this.width,this.height);
+	
 	context.fillStyle = "lightYellow";
 	context.fillRect(this.left + 50, this.top + 135, this.width - 100, 35);
 	context.fillStyle = "black";
@@ -132,7 +133,7 @@ ControlPanel.prototype.draw = function(context) {
 		/*context.fillStyle = button.color;
 		context.fillRect(button.x, button.y, button.width, button.height);
 		*/
-		var sprite = _sprites.sprites["tower"+_selectedCategory];
+		var sprite = _sprites.sprites["tower"+(i+_selectedCategory*3)];
 		
 		sprite.draw(context, button.x, button.y, button.width, button.height);
 		if(button.isSelected)

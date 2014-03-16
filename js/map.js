@@ -265,7 +265,10 @@ Map.prototype.update = function(){
 				return;
 			}else
 				if(this.onFinishedWave)
-					this.onFinishedWave();
+					{
+						this.money += 15 + this.wavesCounter*2 - this.difficulty;
+						this.onFinishedWave();						
+					}
 			
 		}
 	}

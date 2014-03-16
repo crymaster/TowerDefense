@@ -116,7 +116,7 @@ var TowerTypes = [
 var TowerFactory = {};
 
 TowerFactory.createTower = function(index){
-	var tower = new Tower(_sprites.sprites["tower"+parseInt(index/3)]);	
+	var tower = new Tower(_sprites.sprites["tower"+index]);	
 	var data = TowerTypes[index];
 	tower.name = data.name;
 	tower.effect = data.effect;

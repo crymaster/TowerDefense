@@ -29,8 +29,15 @@ var _selectedCategory = 0;
 var _images;
 var _sprites;
 window.addEventListener("resize", function () {
-	if (window.innerWidth < window.innerHeight) 
-		alert ("AAAAAAA");
+	if (window.innerWidth < window.innerHeight) {
+		  document.getElementById('canvas').style.display = "none";
+		  document.getElementById('main').style.backgroundImage = 'url(img/portrait.png)';
+		  alert("Please rotate your device");
+		}
+	else if(window.innerWidth > window.innerHeight){
+	      document.getElementById('canvas').style.display = "";
+          document.getElementById('main').style.backgroundImage = "none";
+	}
 },false);
 function setup(){
 
@@ -428,7 +435,7 @@ function setup(){
 var output;
 window.onload = function(){
 	output = document.getElementById("output");
-	setup();	
+	setup();
 };
 
 window.log = function(msg){
@@ -437,9 +444,17 @@ output.innerHTML = msg;
 </script>
 </head>
 <body>
-
+<div id="main">
 <canvas id="canvas" 
-	tabindex="1" style="border: 1px solid" ></canvas>
+	tabindex="1" style="border: 1px" ></canvas>
 	<div id="output"></div>
+</div>	
 </body>
 </html>
+<script>
+    if(window.innerWidth > window.innerHeight){
+          document.getElementById('canvas').style.display = "none";
+          document.getElementById('main').style.backgroundImage = "url(img/portrait.png)";
+          alert("Please rotate your device");
+    }
+</script>

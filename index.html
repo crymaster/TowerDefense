@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="HandheldFriendly" content="true" />
-<meta name="viewport" content="width=400, height=350, user-scalable=no" />
 
 <script src="js/core/AnimatedSprite.js"></script>
 <script src="js/core/StaticSprite.js"></script>
@@ -40,6 +38,8 @@ function setup(){
 	var sources = {
 		enemies: "img/enemies.png",
 		stone_texture: "img/stone_texture.jpg",
+		grass_texture: "img/grass_texture.jpg",
+		sand_texture: "img/sand_texture.jpg",
 		towers: "img/tanks.png",
 		play: "img/play.png",
 		button: "img/button.png",
@@ -323,7 +323,7 @@ function setup(){
 }
 var output;
 window.onload = function(){
-    output = document.getElementById("output");
+	output = document.getElementById("output");
 	setup();	
 };
 
@@ -331,9 +331,9 @@ window.log = function(msg){
 output.innerHTML = msg;
 };
 </script>
-</script>
 </head>
 <body>
+
 <canvas id="canvas" 
 	tabindex="1" style="border: 1px solid" ></canvas>
 	<div id="output"></div>

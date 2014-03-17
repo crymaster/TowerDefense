@@ -3,7 +3,7 @@ var HEIGHT = 400;
 
 var HALF_WIDTH = WIDTH / 2;
 var HALF_HEIGHT = HEIGHT / 2; 
-var UNIT_SIZE = 20;
+var UNIT_SIZE = 26;
 var HALF_UNIT_SIZE = UNIT_SIZE/2;
 var MAPS = [];
 

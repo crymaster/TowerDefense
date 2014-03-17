@@ -86,6 +86,7 @@ Map.prototype.onmousedown = function(x, y){
 		this.towers_context.arc(x, y, UNIT_SIZE, 0 , 2 * Math.PI, false);
 		this.towers_context.fill();	
 		this.towers_bufferData = this.towers_context.getImageData(0,0,WIDTH,HEIGHT);
+		
 		this.towers.push(this.selectedTower);
 		this.money -= this.selectedTower.price;
 		this.selectedTower.isPlaced = true;		

@@ -28,9 +28,9 @@ var TowerTypes = [
 	{
 		name: "Dual Machine Gun",
 		effect: Effects.NONE,
-		price : 200,	
+		price : 250,	
 		color : "Wheat",
-		damage : 30,
+		damage : 50,
 		shootingRange : 120,
 		fireDelay : 150,
 		rotationSpeed : 4,
@@ -39,12 +39,12 @@ var TowerTypes = [
 	{
 		name: "Cannon",
 		effect: Effects.NONE,
-		price : 400,	
+		price : 600,	
 		color : "Indigo",
-		damage : 250,
+		damage : 450,
 		shootingRange : 200,
-		fireDelay : 650,
-		rotationSpeed : 2,
+		fireDelay : 600,
+		rotationSpeed : 2.5,
 		upgradePrice : 70
 	},{
 		name: "Poison Injector",
@@ -60,24 +60,24 @@ var TowerTypes = [
 	{
 		name: "Poison Injector 2",
 		effect: Effects.POISON,
-		price : 200,	
+		price : 275,	
 		color : "Green",
-		damage : 50,
-		shootingRange : 80,
-		fireDelay : 400,
-		rotationSpeed : 3,
-		upgradePrice : 30
+		damage : 100,
+		shootingRange : 100,
+		fireDelay : 300,
+		rotationSpeed : 4,
+		upgradePrice : 50
 	},
 	{
 		name: "Poison Injector 3",
 		effect: Effects.POISON,
-		price : 200,	
+		price : 450,	
 		color : "Green",
-		damage : 50,
-		shootingRange : 80,
-		fireDelay : 400,
+		damage : 250,
+		shootingRange : 125,
+		fireDelay : 250,
 		rotationSpeed : 3,
-		upgradePrice : 30
+		upgradePrice : 75
 	}
 	,{
 		name: "Refrigerator",
@@ -93,24 +93,24 @@ var TowerTypes = [
 	{
 		name: "Refrigerator 2",
 		effect: Effects.FREEZE,
-		price : 150,	
+		price : 250,	
 		color : "Blue",
-		damage : 40,
-		shootingRange : 80,
-		fireDelay : 450,
-		rotationSpeed : 3,
-		upgradePrice : 25
+		damage : 80,
+		shootingRange : 85,
+		fireDelay : 400,
+		rotationSpeed : 3.5,
+		upgradePrice : 40
 	},
 	{
 		name: "Refrigerator 3",
 		effect: Effects.FREEZE,
-		price : 150,	
+		price : 350,	
 		color : "Blue",
-		damage : 40,
-		shootingRange : 80,
-		fireDelay : 450,
-		rotationSpeed : 3,
-		upgradePrice : 25
+		damage : 120,
+		shootingRange : 90,
+		fireDelay : 350,
+		rotationSpeed : 4,
+		upgradePrice : 55
 	}
 ];
 var TowerFactory = {};
@@ -121,7 +121,7 @@ TowerFactory.createTower = function(index){
 	tower.name = data.name;
 	tower.effect = data.effect;
 	tower.price = data.price;
-	tower.color = data.color;
+	tower.color = data.color
 	tower.damage = data.damage;
 	tower.shootingRange = data.shootingRange;
 	tower.fireDelay = data.fireDelay;

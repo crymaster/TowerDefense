@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-<meta name="HandheldFriendly" content="true" />
-<meta name="viewport" content="width=400, height=200, user-scalable=no" />
+<meta charset="UTF-8">
 <script src="js/core/AnimatedSprite.js"></script>
 <script src="js/core/StaticSprite.js"></script>
 <script src="js/core/ImgLoader.js"></script>
@@ -28,6 +26,10 @@ var _selectedDifficulty = 1;
 var _selectedCategory = 0;
 var _images;
 var _sprites;
+window.addEventListener("resize", function () {
+	if (window.innerWidth < window.innerHeight) 
+		alert ("AAAAAAA");
+},false);
 function setup(){
 
 	var canvas = document.getElementById("canvas");
@@ -57,7 +59,10 @@ function setup(){
 		map2: "img/map2.png",
 		map3: "img/map3.png",
 		logo: "img/logo.png",
-		metalplate: "img/metalplate.jpg"
+		normal_button: "img/normal_button.png",
+		pressed_button: "img/pressed_button.png",
+		metalplate: "img/metalplate.jpg",
+		sunken_plate: "img/sunken_plate.jpg"
 	};
 	var loader = new ImgLoader(sources,
 		function(image,percent) {	// on progressing			

@@ -121,12 +121,16 @@ Map.prototype.reset = function(ignoreEvent){
 	
 	//this.land_context.fillStyle = "Sienna";
 	//this.land_context.fillRect(0, 0, WIDTH, HEIGHT);
-	this.land_context.drawImage(_images.stone_texture,0,0);
+	switch (_selectedLevel) {
+		case 0:	this.land_context.drawImage(_images.stone_texture,0,0); break;
+		case 1: this.land_context.drawImage(_images.grass_texture,0,0); break;
+		case 2: this.land_context.drawImage(_images.sand_texture,0,0); break;
+	}
 	this.land_context.save();
-	this.land_context.strokeStyle = "rgba(0,0,0,1)";
+	this.land_context.strokeStyle = "rgba(126,18,128,1)";
 	this.land_context.globalCompositeOperation = "destination-out";
 
-	this.land_context.lineWidth = UNIT_SIZE * 2;
+	this.land_context.lineWidth = UNIT_SIZE * 1.75;
 	this.land_context.lineJoin = "round";
 	
 	for(var i = 0; i < this.levelData.roadsX.length; i++)

@@ -136,20 +136,33 @@ ControlPanel.prototype.draw = function(context) {
 		var sprite = _sprites.sprites["tower"+(i+_selectedCategory*3)];
 		
 		sprite.draw(context, button.x, button.y, button.width, button.height);
+		
+		if (this.map.money < TowerTypes[i+_selectedCategory*3].price)
+		{
+			context.rect(button.x,button.y,button.width,button.height);
+			context.fillStyle = "rgba(255, 255, 255, 0.5)";
+			context.fill();
+			context.restore();
+		}	
+		
+		//context.rect(button.x, button.y, button.width, button.height);
+		
 		if(button.isSelected)
 		{
 			context.save();
 			context.strokeStyle = "red";
+			context.lineWidth = 3;
 			context.strokeRect(button.x,button.y,button.width,button.height);
 			context.restore();
 		}
+		//context.fill();
 		context.beginPath();
 		/*context.fillStyle = "white";
 		
 		context.fillText(button.text, button.x + 5, button.y + 10);
 		context.fill();
 		*/
-    }
+    }	
 	
 	for (var i = this.actionButtons.length-1; i>=0; i--) {
 		var button = this.actionButtons[i];
@@ -187,14 +200,21 @@ ControlPanel.prototype.drawTowerInfo = function(context, tower){
 	
 	context.fillStyle = "black";	
 	var left = this.left + 10;
+	context.fillStyle = "blue";
+	context.font = "bold 13px Arial";
 	context.fillText("Name: " + tower.name, left, this.top + 245);
+	context.font = "13px Arial";
+	context.fillStyle = "black";
 	context.fillText("Effect: " + Effects.getName(tower.effect), left, this.top + 265);
 	context.fillText("Level: " + tower.level, left+105, this.top + 265);
 	context.fillText("Range: " + tower.shootingRange, left, this.top + 285);
 	context.fillText("Fire rate: " + Math.floor((1000 / tower.fireDelay) * 10), left + 105, this.top + 285);
 	context.fillText("Damage: " + tower.damage, left, this.top + 305);
 	//context.fillText("Rotation Speed: " + Math.floor(tower.rotationSpeed * 100), left, this.top + 160);
+	context.fillStyle = "yellow";
+	context.font = "bold 13px Arial";
 	context.fillText("Price: " + tower.price + "$", left + 105, this.top + 305);
+	context.restore();
 }
 ControlPanel.prototype.onmousedown = function(x, y){
 	this.selectAt(x, y);			

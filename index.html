@@ -42,10 +42,15 @@ function setup(){
 		stone_texture: "img/stone_texture.jpg",
 		towers: "img/tanks.png",
 		play: "img/play.png",
+		play_clicked: "img/play_clicked.png",
 		button: "img/button.png",
+		button_clicked: "img/button_clicked.png",
 		back: "img/back.png",
+		back_clicked: "img/back_clicked.png",
 		next: "img/next.png",
+		next_clicked: "img/next_clicked.png",
 		prev: "img/prev.png",
+		prev_clicked: "img/prev_clicked.png",
 		map1: "img/map1.png",
 		map2: "img/map2.png",
 		map3: "img/map3.png",
@@ -110,9 +115,19 @@ function setup(){
                 width: 150,
                 height: 200,
                 onclick: function(){
-                    difficultScreen.stop();
-                    _selectedDifficulty = 0;
-                    new Game(canvas,context).init();
+                	difficultScreen.items[0].draw = function(context){
+                		context.drawImage(_images.button_clicked,cx-250,70,150,350);
+                		context.fillText("Easy",cx-175,250);
+                    };
+                    window.setTimeout(function(){
+                        difficultScreen.items[0].draw = function(context){
+                        	context.drawImage(_images.button,cx-250,70,150,350);
+                        	context.fillText("Easy",cx-175,250);
+                        };  
+                        difficultScreen.stop();
+                        _selectedDifficulty = 0;
+                        new Game(canvas,context).init();
+                    },200);
                 },
                 draw: function(context){
                     context.drawImage(_images.button,cx-250,70,150,350);
@@ -130,9 +145,25 @@ function setup(){
                 height: 200,
                 text: "Medium",
                 onclick: function(){
-                    difficultScreen.stop();
-                    _selectedDifficulty = 1;
-                    new Game(canvas,context).init();
+                	difficultScreen.items[1].draw = function(context){
+                		context.drawImage(_images.button_clicked,cx-75 ,70,150,350);
+                		context.font = "40px Arial";
+                        context.fillStyle = "white";
+                        context.fillText("Medium",cx,250);
+                        context.font = "15px Arial";
+                    };
+                    window.setTimeout(function(){
+                        difficultScreen.items[1].draw = function(context){
+                        	context.drawImage(_images.button,cx-75 ,70,150,350);
+                        	context.font = "40px Arial";
+                            context.fillStyle = "white";
+                            context.fillText("Medium",cx,250);
+                            context.font = "15px Arial";
+                        };  
+                        difficultScreen.stop();
+                        _selectedDifficulty = 1;
+                        new Game(canvas,context).init();
+                    },200);
                 },
                 draw: function(context){
                     context.drawImage(_images.button,cx-75 ,70,150,350);
@@ -150,9 +181,25 @@ function setup(){
                 height: 200,
                 text: "Hard",
                 onclick: function(){
-                    difficultScreen.stop();
-                    _selectedDifficulty = 2;
-                    new Game(canvas,context).init();
+                	difficultScreen.items[2].draw = function(context){
+                		context.drawImage(_images.button_clicked,cx+100,70,150,350);
+                        context.font = "40px Arial";
+                        context.fillStyle = "white";
+                        context.fillText("Hard",cx+175,250);
+                        context.font = "15px Arial";
+                    };
+                    window.setTimeout(function(){
+                        difficultScreen.items[2].draw = function(context){
+                        	context.drawImage(_images.button,cx+100,70,150,350);
+                            context.font = "40px Arial";
+                            context.fillStyle = "white";
+                            context.fillText("Hard",cx+175,250);
+                            context.font = "15px Arial";
+                        };  
+                        difficultScreen.stop();
+                        _selectedDifficulty = 2;
+                        new Game(canvas,context).init();
+                    },200);
                 },
                 draw: function(context){
                     context.drawImage(_images.button,cx+100,70,150,350);
@@ -169,8 +216,16 @@ function setup(){
                 width: 60,
                 height: 60,
                 onclick: function(){
-                    difficultScreen.stop();
-                    mapScreen.start();
+                	difficultScreen.items[3].draw = function(context){
+                		context.drawImage(_images.back_clicked,cx-310,10,60,60);
+                	};
+                	window.setTimeout(function(){
+                		difficultScreen.items[3].draw = function(context){
+                            context.drawImage(_images.back,cx-310,10,60,60);
+                        };	
+                		difficultScreen.stop();
+                        mapScreen.start();	
+                	},200);
                 },
                 draw: function(context){
                     context.drawImage(_images.back,cx-310,10,60,60);
@@ -214,6 +269,9 @@ function setup(){
                 width: 90,
                 height: 100,
                 onclick: function(){
+                	mapScreen.items[1].draw = function(context){
+                		context.drawImage(_images.prev_clicked,cx-290,175,90,90);
+                	};
                     _selectedLevel = (_selectedLevel+2) % 3;
                     mapScreen.items[0].draw = function(context){
                     	switch(_selectedLevel){
@@ -228,6 +286,11 @@ function setup(){
                     		break;
                     	}
                     };
+                    window.setTimeout(function(){
+                    	mapScreen.items[1].draw = function(context){
+                            context.drawImage(_images.prev,cx-290,175,90,90);
+                        };
+                    },200);
                 },
                 draw: function(context){
                     context.drawImage(_images.prev,cx-290,175,90,90);
@@ -240,6 +303,9 @@ function setup(){
                 width: 90,
                 height: 100,
                 onclick: function(){
+                	mapScreen.items[2].draw = function(context){
+                		context.drawImage(_images.next_clicked,cx+190,175,90,90);
+                    };
                 	_selectedLevel = (_selectedLevel+1) % 3;
                 	mapScreen.items[0].draw = function(context){
                         switch(_selectedLevel){
@@ -254,6 +320,11 @@ function setup(){
                             break;
                         }
                     };
+                    window.setTimeout(function(){
+                        mapScreen.items[2].draw = function(context){
+                        	context.drawImage(_images.next,cx+190,175,90,90);
+                        };
+                    },200);
                 },
                 draw: function(context){
                     context.drawImage(_images.next,cx+190,175,90,90);
@@ -266,8 +337,16 @@ function setup(){
                 width: 60,
                 height: 60,
                 onclick: function(){
-                    mapScreen.stop();
-                    welcomeScreen.start();
+                	mapScreen.items[3].draw = function(context){
+                		context.drawImage(_images.back_clicked,cx-310,10,60,60);
+                	};
+                	window.setTimeout(function(){
+                		welcomeScreen.items[0].draw = function(context){
+                            context.drawImage(_images.play,cx-65,140,130,130);
+                        };
+                        mapScreen.stop();
+                        welcomeScreen.start();	
+                	},200);
                 },
                 draw: function(context){
                     context.drawImage(_images.back,cx-310,10,60,60);
@@ -309,14 +388,30 @@ function setup(){
             }));
 			
 			welcomeScreen.items[0].onclick = function(){
-				welcomeScreen.stop();
-				// start game
-				//new Game(canvas,context).init();
-				mapScreen.start();
+				welcomeScreen.items[0].draw = function(context){
+					context.drawImage(_images.play_clicked,cx-65,140,130,130);
+				};
+				window.setTimeout(function(){
+					mapScreen.items[3].draw = function(context){
+                        context.drawImage(_images.back,cx-310,10,60,60);
+                    };
+					welcomeScreen.stop();
+	                mapScreen.start();	
+				},200);
 			};
 			welcomeScreen.items[1].onclick = function(){
-				welcomeScreen.stop();
-				helpScreen.start();					
+				welcomeScreen.items[1].draw = function(context){
+					context.drawImage(_images.button_clicked,cx-245,240,150,130);
+                    context.fillText(titles[1],cx-170,310);
+                };
+                window.setTimeout(function(){
+                	welcomeScreen.items[1].draw = function(context){
+                        context.drawImage(_images.button    ,cx-245,240,150,130);
+                        context.fillText(titles[1],cx-170,310);
+                    };
+                	welcomeScreen.stop();
+                    helpScreen.start();	
+                },200);			
 			};
 			welcomeScreen.start();
 		});
